@@ -66,6 +66,28 @@ func (r *userMetadataHandler) OnCreate(client client.Client, decoder admission.D
 			}
 		}
 
+		if tnt.Spec.NamespaceOptions != nil && tnt.Spec.NamespaceOptions.AdditionalMetadata != nil {
+			if ns.Annotations == nil {
+				ns.SetAnnotations(tnt.Spec.NamespaceOptions.AdditionalMetadata.Annotations)
+			} else {
+				for k, v := range tnt.Spec.NamespaceOptions.AdditionalMetadata.Annotations {
+					ns.Annotations[k] = v
+				}
+			}
+
+			if ns.Labels == nil {
+				ns.SetLabels(tnt.Spec.NamespaceOptions.AdditionalMetadata.Labels)
+			} else {
+				for k, v := range tnt.Spec.NamespaceOptions.AdditionalMetadata.Labels {
+					ns.Labels[k] = v
+				}
+			}
+		}
+
+		if tnt.Spec.NodeSelector != nil {
+			ns.Annotations = capsuleutils.BuildNodeSelector(tnt, ns.Annotations)
+		}
+
 		return nil
 	}
 }
