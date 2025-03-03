@@ -33,8 +33,8 @@ var _ = Describe("checking namespace metadata considers tenant spec", func() {
 			NodeSelector: map[string]string{
 				"foo": "bar",
 			},
-			NamespaceOptions: capsulev1beta2.NamespaceOptions{
-				AdditionalMetadata: api.AdditionalMetadataSpec{
+			NamespaceOptions: &capsulev1beta2.NamespaceOptions{
+				AdditionalMetadata: &api.AdditionalMetadataSpec{
 					Labels: map[string]string{
 						"label1key": "label1value",
 					},
@@ -63,7 +63,7 @@ var _ = Describe("checking namespace metadata considers tenant spec", func() {
 		Expect(k8sClient.Delete(context.TODO(), ns)).Should(Succeed())
 	})
 
-	It("namespace metadata check", func() {
+	It("tenant namespace metadata check", func() {
 		By("checking namespace annotations", func() {
 			EventuallyCreation(func() error {
 				return k8sClient.Create(context.TODO(), ns)
