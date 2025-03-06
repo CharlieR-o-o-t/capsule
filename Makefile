@@ -259,6 +259,7 @@ trace-install:
 		--values charts/capsule/ci/tracing-values.yaml \
 		capsule \
 		./charts/capsule
+	kubectl get pod -n capsule-system
 
 .PHONY: trace-e2e
 trace-e2e: kind
