@@ -16,6 +16,20 @@ on:
       - 'main.go'
       - 'Makefile'
 
+  push:
+    branches:
+      - "test_e2e"
+    paths:
+      - '.github/workflows/e2e.yml'
+      - 'api/**'
+      - 'controllers/**'
+      - 'pkg/**'
+      - 'e2e/*'
+      - 'Dockerfile'
+      - 'go.*'
+      - 'main.go'
+      - 'Makefile'
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
